@@ -1,48 +1,17 @@
-name: Deploy to GitHub Pages
+name: Automatically Deployment
 
-on:
-  push:
-    branches: ['main']
-  workflow_dispatch:
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: 'pages'
-  cancel-in-progress: true
+on: [push]
 
 jobs:
-  deploy:
+  deployment:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          node-version: 18
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Inject API Key into environment
-        run: echo "VITE_PEXELS_API_KEY=${{ secrets.VITE_PEXELS_API_KEY }}" > .env
-
-      - name: Build the project
-        run: npm run build
-
-      - name: Configure Pages
-        uses: actions/configure-pages@v3
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
-        with:
-          path: ./dist
-
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v2
+          node-version: '16'
+      - name: Setting .env
+        run: |
+          echo "VITE_API_KEY=${{ secrets.VITE_API_KEY }}" >> .env
+        env:
+          VITE_API_KEY: ${{ secrets.VITE_API_KEY }}
