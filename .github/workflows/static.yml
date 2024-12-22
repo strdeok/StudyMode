@@ -22,7 +22,7 @@ concurrency:
 
 defaults:
       run:
-        working-directory: "폴더명"
+        working-directory: "studymode"
 
 jobs:
   # 배포 작업
