@@ -10,4 +10,5 @@ export default defineConfig({
     outDir: "dist",
     commonjsOptions: { transformMixedEsModules: true }, // Change
   },
+  define: { 'process.env': process.env, },
 });
