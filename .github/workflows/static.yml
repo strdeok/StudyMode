@@ -2,7 +2,7 @@ name: Deploy static content to Pages
 
 on:
   push:
-    branches: ["main"]
+    branches: ['main']
   workflow_dispatch:
 
 permissions:
@@ -11,7 +11,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages"
+  group: 'pages'
   cancel-in-progress: true
 
 jobs:
@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: "studymode" # 모든 명령어를 studymode 디렉터리에서 실행
+        working-directory: "studymode"  # 프로젝트 경로
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -38,8 +38,11 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Debug Build Output
-        run: ls -al ./dist
+      - name: Check if dist exists
+        run: ls -al dist  # dist 디렉터리가 존재하는지 확인
+
+      - name: Set permissions for dist
+        run: chmod -R 755 ./dist  # dist 디렉터리 권한 설정
 
       - name: Setup Pages
         uses: actions/configure-pages@v3
@@ -47,7 +50,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
-          path: "./dist"
+          path: ./dist  # dist 디렉터리 경로 확인
 
       - name: Deploy to GitHub Pages
         id: deployment
