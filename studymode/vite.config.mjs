@@ -7,6 +7,7 @@ export default defineConfig({
   base: "/StudyMode/",
 
   build: {
-    commonjsOptions: { transformMixedEsModules: true } // Change
-  }
+    outDir: "dist",
+    commonjsOptions: { transformMixedEsModules: true }, // Change
+  },
 });
