@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: "studymode" # 모든 명령어가 studymode 디렉터리 내에서 실행됨
+        working-directory: "studymode" # 모든 명령어를 studymode 디렉터리에서 실행
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -37,6 +37,9 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      - name: Debug Build Output
+        run: ls -al ./dist
 
       - name: Setup Pages
         uses: actions/configure-pages@v3
