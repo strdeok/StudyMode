@@ -11,3 +11,5 @@ StudyMode는 시간을 알려주는 웹 애플리케이션
 - React: UI 구현
 - Styled Components: 스타일링
 - Pexels API: 배경 이미지 제공
+
+https://strdeok.github.io/StudyMode/
