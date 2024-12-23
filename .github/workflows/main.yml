@@ -1,48 +1,20 @@
-name: Deploy to GitHub Pages
+name: Automatically Deployment // workflow를 실행시키기 위한 event 명
 
-on:
-  push:
-    branches: ['main']
-  workflow_dispatch:
+on: [push] // workflow를 실행시킬 브런치와 요청(push, pull request)
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: 'pages'
-  cancel-in-progress: true
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Inject API Key into environment
-        run: echo "VITE_PEXELS_API_KEY=${{ secrets.VITE_PEXELS_API_KEY }}" > .env
-
-      - name: Build the project
-        run: npm run build
-
-      - name: Configure Pages
-        uses: actions/configure-pages@v3
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
-        with:
-          path: ./dist
-
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v2
+jobs: // workflow의 job목록
+deployment: //job name
+ runs-on: ubuntu-latest // runner가 실행되는 환경
+ steps:
+  - uses: actions/checkout@v3  //해당 레포지토리로 check-out하여 레포지토리에 접근할 수 있는 Action 불러오기 
+  - uses: actions/setup-node@v3 //사용할 node 버전 (node 16 부터는 node@v3)
+    with:
+      node-version: '16'
+    // 실행될 명령에 대한 설명 
+  - name: Setting .env
+    run: | // workflow 명령
+       echo "VITE_API_KEY =$VITE_API_KEY" >> .env
+       // echo: 콘솔 창에 인수로 방은 문자열을 출력하는 명령어
+       // >> : 출력 받은 문자열을 파일에 저장하는 명령어
+    env:  
+     VITE_API_KEY: ${{secrets.VITE_API_KEY}}
